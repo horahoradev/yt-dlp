@@ -127,6 +127,7 @@ class BitChuteIE(InfoExtractor):
             'description': self._og_search_description(webpage, default=None),
             'thumbnail': self._og_search_thumbnail(webpage),
             'uploader': clean_html(get_element_by_class('owner', webpage)),
+            'uploader_id': clean_html(get_element_by_class('owner', webpage)),
             'upload_date': unified_strdate(self._search_regex(
                 r'at \d+:\d+ UTC on (.+?)\.', publish_date, 'upload date', fatal=False)),
             'formats': formats,
