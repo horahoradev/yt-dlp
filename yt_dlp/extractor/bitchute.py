@@ -121,12 +121,16 @@ class BitChuteIE(InfoExtractor):
                 'Video is unavailable. Please make sure this video is playable in the browser '
                 'before reporting this issue.', expected=True, video_id=video_id)
 
+        uploader = self._search_regex(
+                r'<a\s[^>]*\bhref=["\']/channel/([a-zA-Z0-9_]+)/" .*', webpage, 'uploader id', default=None)
+
         return {
             'id': video_id,
             'title': self._html_extract_title(webpage) or self._og_search_title(webpage),
             'description': self._og_search_description(webpage, default=None),
             'thumbnail': self._og_search_thumbnail(webpage),
-            'uploader': clean_html(get_element_by_class('owner', webpage)),
+            'uploader': uploader,
+            'uploader_id': uploader,
             'upload_date': unified_strdate(self._search_regex(
                 r'at \d+:\d+ UTC on (.+?)\.', publish_date, 'upload date', fatal=False)),
             'formats': formats,
